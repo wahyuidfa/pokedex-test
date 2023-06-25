@@ -1,118 +1,185 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
+import Modal from "@/components/Modal";
 
-const inter = Inter({ subsets: ['latin'] })
-
-export default function Home() {
-  return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+interface Pokemon {
+    name: string;
+    url: string;
 }
+
+interface PokemonDetails {
+    name: string;
+    image: string;
+    types: string[];
+}
+type ApiResponse = {
+    results: Pokemon[];
+    next: string | null;
+};
+const Home: React.FC = () => {
+    const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
+    const [filteredPokemons, setFilteredPokemons] = useState<Pokemon[]>([]);
+    const [selectedPokemon, setSelectedPokemon] = useState<PokemonDetails | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [page, setPage] = useState<number>(1);
+    const [limit, setLimit] = useState<number>(20);
+    const [category, setCategory] = useState("");
+    const [hasMore, setHasMore] = useState<boolean>(true);
+    const observer = useRef<IntersectionObserver | null>(null);
+    const lastPokemonRef = useRef<HTMLDivElement | null>(null);
+    const [isOpoen, setIsOpen] = useState(false);
+    const [isSlide, setIsSlide] = useState(true);
+    const [title, setTitle] = useState("");
+
+    const openModal = (judul: string) => {
+        setTitle(judul);
+        setIsOpen(true);
+        setIsSlide(true);
+        document.body.style.overflow = "hidden";
+    };
+
+    const closeModal = () => {
+        setIsSlide(false);
+        setTimeout(() => {
+            setIsOpen(false);
+            document.body.style.overflow = "auto";
+        }, 90);
+    };
+    useEffect(() => {
+        const fetchPokemon = async () => {
+            setLoading(true);
+            try {
+                const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=900}`);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 100);
+                const newPokemons = response.data.results;
+                console.log(newPokemons);
+
+                setPokemonList(newPokemons);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching Pokémon data:", error);
+            }
+        };
+
+        fetchPokemon();
+    }, [limit]);
+
+    useEffect(() => {
+        setFilteredPokemons(pokemonList);
+    }, [pokemonList]);
+
+    // const handleScroll = () => {
+    //     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    //     if (scrollTop + clientHeight >= scrollHeight - 20) {
+    //         // loadMorePokemon();
+    //         setLimit((prevLimit) => prevLimit + 20);
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     window.addEventListener("scroll", handleScroll);
+    //     return () => {
+    //         window.removeEventListener("scroll", handleScroll);
+    //     };
+    // }, []);
+
+    const handleFilterChange = async (type: string) => {
+        if (type === "All") {
+            setFilteredPokemons(pokemonList);
+        } else {
+            const filtered = await Promise.all(
+                pokemonList.map(async (pokemon) => {
+                    const response = await axios.get(pokemon.url);
+                    console.log(response);
+
+                    const { types } = response.data;
+                    const pokemonTypes = types.map((t: { type: { name: string } }) => t.type.name);
+                    return { ...pokemon, types: pokemonTypes };
+                })
+            );
+
+            const filteredByType = filtered.filter((pokemon) =>
+                pokemon.types.includes(type.toLowerCase())
+            );
+
+            setFilteredPokemons(filteredByType);
+        }
+    };
+
+    const handlePokemonClick = async (pokemon: Pokemon) => {
+        try {
+            const response = await axios.get(pokemon.url);
+            const { name, sprites, types } = response.data;
+            const image = sprites.front_default;
+            const pokemonDetails: PokemonDetails = {
+                name,
+                image,
+                types: types.map((t: { type: { name: string } }) => t.type.name),
+            };
+            setSelectedPokemon(pokemonDetails);
+            if (selectedPokemon) {
+                openModal("Detail");
+            }
+        } catch (error) {
+            console.error("Error fetching Pokémon details:", error);
+        }
+    };
+
+    return (
+        <div>
+            <div>
+                <div className='fixed top-0 bg-white w-full p-4'>
+                    <h1>Pokémon Browser</h1>
+                    <select onChange={(e) => handleFilterChange(e.target.value)}>
+                        <option value='All'>All</option>
+                        <option value='fire'>Fire</option>
+                        <option value='water'>Water</option>
+                        <option value='grass'>Grass</option>
+                        <option value='electric'>Electric</option>
+                        <option value='normal'>Normal</option>
+                    </select>
+                </div>
+                <div className='mt-28'>
+                    {filteredPokemons.map((pokemon, index) => (
+                        <div
+                            key={index}
+                            onClick={() => handlePokemonClick(pokemon)}
+                            style={{
+                                border: "1px solid #ccc",
+                                borderRadius: "4px",
+                                padding: "16px",
+                                marginBottom: "16px",
+                                cursor: "pointer",
+                            }}>
+                            <h3>{pokemon.name}</h3>
+                        </div>
+                    ))}
+                </div>
+                {loading && <div>Loading....</div>}
+
+                <Modal
+                    closeModal={closeModal}
+                    isOpen={isOpoen}
+                    isSlide={isSlide}
+                    openModal={openModal}
+                    title={title}>
+                    {selectedPokemon && (
+                        <div className='h-96 w-full item-center '>
+                            <h2 className='text-center'>{selectedPokemon.name}</h2>
+                            <img
+                                className='m-auto w-36'
+                                src={selectedPokemon.image}
+                                alt={selectedPokemon.name}
+                            />
+                            <p className='text-center'>Types: {selectedPokemon.types.join(", ")}</p>
+                        </div>
+                    )}
+                </Modal>
+            </div>
+        </div>
+    );
+};
+
+export default Home;
